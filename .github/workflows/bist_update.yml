@@ -1,0 +1,27 @@
+name: BIST 100 Daily Update
+
+on:
+  schedule:
+    # Günde bir kez, her gün saat 00:00'da çalışacak şekilde ayarlandı
+    - cron: "0 0 * * *"
+
+jobs:
+  update_bist:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run BIST update script
+      run: |
+        python main.py
