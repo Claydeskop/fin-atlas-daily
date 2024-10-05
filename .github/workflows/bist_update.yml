@@ -4,6 +4,7 @@ on:
   schedule:
     # Günde bir kez, her gün saat 00:00'da çalışacak şekilde ayarlandı
     - cron: "0 0 * * *"
+  workflow_dispatch: # Manuel çalıştırma tetikleyicisi
 
 jobs:
   update_bist:
