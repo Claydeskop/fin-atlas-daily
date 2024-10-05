@@ -1,18 +1,18 @@
+import os
 import json
-from datetime import datetime
-
-import firebase_admin
 import requests
 from bs4 import BeautifulSoup
+import firebase_admin
 from firebase_admin import credentials, firestore
+from datetime import datetime
 
-
-def scrape_and_store_bist(request):
-    # Firebase ile bağlantı kurmak için serviceAccountKey.json dosyasını kullanın
-    cred = credentials.Certificate('path/to/your-serviceAccountKey.json')
+def scrape_and_store_bist():
+    # GitHub Secrets üzerinden service account bilgilerini çekiyoruz
+    service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
+    cred = credentials.Certificate(service_account_info)
     firebase_admin.initialize_app(cred)
 
-    # Firestore istemcisini oluştur
+    # Firestore istemcisi oluştur
     db = firestore.client()
 
     # Web sitesine istekte bulunma
@@ -56,6 +56,9 @@ def scrape_and_store_bist(request):
             'BIST_value': bist_value
         })
 
-        return f"{current_date} tarihli BIST 100 endeks değeri başarıyla kaydedildi."
+        print(f"{current_date} tarihli BIST 100 endeks değeri başarıyla kaydedildi.")
     else:
-        return "Soru bulunamadı."
+        print("Soru bulunamadı.")
+
+# Fonksiyonu çalıştır
+scrape_and_store_bist()
