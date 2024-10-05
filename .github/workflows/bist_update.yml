@@ -2,9 +2,9 @@ name: BIST 100 Daily Update
 
 on:
   schedule:
-    # Günde bir kez, her gün saat 00:00'da çalışacak şekilde ayarlandı
+    # Günde bir kez çalıştırmak için ayar: gece yarısı (00:00)
     - cron: "0 0 * * *"
-  workflow_dispatch: # Manuel çalıştırma tetikleyicisi
+  workflow_dispatch:  # Manuel çalıştırma tetikleyicisi
 
 jobs:
   update_bist:
@@ -26,3 +26,5 @@ jobs:
     - name: Run BIST update script
       run: |
         python main.py
+      env:
+        FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
